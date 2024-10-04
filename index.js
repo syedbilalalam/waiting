@@ -1,5 +1,5 @@
 // As defined event time
-const eventStart = 1728081281+1700; // Unix time
+const eventStart = 1728752400; // Unix time
 
 // Event video element
 const videoElement = document.getElementById('myVideo');
