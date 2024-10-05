@@ -5,13 +5,10 @@ const eventStart = 1728752400; // Unix time
 let eventVarTime = eventStart;
 
 // Project preparation time
-const projectPrepareTime = 60*3;
+const projectPrepareTime = 60*3-2;
 
 // Is project prepared
 let isProjectPrepareing = false;
-
-// Fake time for development purpose
-let fakeTime = false;
 
 // Event video element
 const videoElement = document.getElementById('myVideo');
@@ -21,7 +18,7 @@ systemAudio.preload='auto';
 
 function updateTimeAtWaitingArea() {
     let currentTime = parseInt(new Date().getTime() / 1000); // Time in seconds
-    let timeDifference = fakeTime?fakeTime:(eventVarTime - currentTime);
+    let timeDifference = eventVarTime - currentTime;
 
     // Checking for product prepration time
     if(!isProjectPrepareing && timeDifference <= projectPrepareTime){
@@ -40,6 +37,10 @@ function updateTimeAtWaitingArea() {
         seconds: 0
     };
     
+    // Time to turn off audio
+    if (!systemAudio.paused && timeDifference < 136)
+        fadeOutAudio(systemAudio);
+
     // Checking for a valid time difference
     if (timeDifference < 135)
         return false;
@@ -88,6 +89,7 @@ function updateTimeAtWaitingArea() {
     return true;
 }
 
+
 // Prepare project function
 function prepareProject() {
     // Switching project screen
@@ -95,7 +97,6 @@ function prepareProject() {
     setTimeout(() => {
         document.getElementById('eventAboutToStart').classList.add('active');
         setTimeout(() => {
-            systemAudio.pause();
             videoElement.play();
         }, 1000);
     }, 1000);
@@ -129,6 +130,25 @@ videoElement.onended = ()=>{
     window.location.replace('https://www.youtube.com');
 }
 
+// Audio controller
+function fadeOutAudio(audio) {
+    const duration = 4000;   // Duration to fade out over (in milliseconds)
+    const intervalTime = 50; // Time between each volume adjustment (in milliseconds)
+    
+    const step = audio.volume / (duration / intervalTime);
+
+    const interval = setInterval(() => {
+        if (audio.volume > 0) {
+            audio.volume = Math.max(0, audio.volume - step); // Reduce volume, but don't go below 0
+        } else {
+            clearInterval(interval);
+            audio.volume = 0; // Ensure exact volume 0
+
+            // Turing audio off
+            audio.pause();
+        }
+    }, intervalTime);
+}
 
 // Code fetch by bilal from chatgpt to fetch binary data from server at exterame real time syncing of the time at client side
 async function streamVideo(url) {
