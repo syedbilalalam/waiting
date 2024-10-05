@@ -15,7 +15,7 @@ let fakeTime = false;
 
 // Event video element
 const videoElement = document.getElementById('myVideo');
-const systemAudio = new Audio('./index_files/resources/ogg.mp3');
+const systemAudio = new Audio('ogg.mp3');
 systemAudio.loop = true;
 systemAudio.preload='auto';
 
