@@ -1,15 +1,38 @@
 // As defined event time
-const eventStart = 1728752400; // Unix time
+const eventStart = 1728123343+300; // Unix time
+
+// Variable event time
+let eventVarTime = eventStart;
+
+// Project preparation time
+const projectPrepareTime = 60*3;
+
+// Is project prepared
+let isProjectPrepareing = false;
+
+// Fake time for development purpose
+let fakeTime = false;
 
 // Event video element
 const videoElement = document.getElementById('myVideo');
-const systemAudio = new Audio('./ogg.mp3');
+const systemAudio = new Audio('./index_files/resources/ogg.mp3');
 systemAudio.loop = true;
 systemAudio.preload='auto';
 
 function updateTimeAtWaitingArea() {
-    const currentTime = parseInt(new Date().getTime() / 1000); // Time in seconds
-    let timeDifference = eventStart - currentTime;
+    let currentTime = parseInt(new Date().getTime() / 1000); // Time in seconds
+    let timeDifference = fakeTime?fakeTime:(eventVarTime - currentTime);
+
+    // Checking for product prepration time
+    if(!isProjectPrepareing && timeDifference <= projectPrepareTime){
+        eventVarTime = currentTime + projectPrepareTime;
+        timeDifference = projectPrepareTime;
+        isProjectPrepareing = true;
+
+        // Sending user the information that project is ready just preparing a valid link
+        document.getElementById('quickMessage').innerText = 'Project is ready requesting server the project link...';
+    }
+
     let timeFormat = {
         days: 0,
         hours: 0,
