@@ -111,19 +111,7 @@ document.getElementById('interactDocument').onclick = () => {
         document.getElementById('eventPending').classList.add('active');
         systemAudio.play();
         // Starting with time update
-        let timeUpdate = setInterval(() => {
-            // If the event is about to start or started
-            if (!updateTimeAtWaitingArea()) {
-                // Stoping time update event
-                clearInterval(timeUpdate);
-
-                // Starting fast startup to the project
-                prepareProject();
-            }
-            // Intensional bug
-            clearInterval(timeUpdate);
-
-        }, 1000);
+       
     },1000);
 }
 
