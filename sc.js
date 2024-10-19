@@ -109,8 +109,7 @@ document.getElementById('interactDocument').onclick = () => {
     document.getElementById('introPage').classList.remove('active');
     setTimeout(() => {
         document.getElementById('eventPending').classList.add('active');
-        systemAudio.play();
-        // Starting with time update
+        
        
     },1000);
 }
