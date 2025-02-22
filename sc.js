@@ -1,5 +1,5 @@
 // As defined event time
-const eventStart = 1729357200; // Unix time
+const eventStart = 1740270653; // Unix time
 
 // Variable event time
 let eventVarTime = eventStart;
@@ -109,8 +109,6 @@ document.getElementById('interactDocument').onclick = () => {
     document.getElementById('introPage').classList.remove('active');
     setTimeout(() => {
         document.getElementById('eventPending').classList.add('active');
-        
-       
     },1000);
 }
 

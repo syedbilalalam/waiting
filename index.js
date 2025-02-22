@@ -1,5 +1,5 @@
 // As defined event time
-const eventStart = 1730437200; // Unix time
+const eventStart = 1740934800; // Unix time
 
 // Variable event time
 let eventVarTime = eventStart;
